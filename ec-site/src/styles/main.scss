@@ -1,0 +1,720 @@
+// ===== リセット・ベーススタイル =====
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+// ===== ヘッダー =====
+.header {
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    // サイトタイトル
+    &__title {
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+    }
+
+    // ナビゲーション
+    &__nav {
+        display: flex;
+        gap: 24px;
+    }
+
+    // ナビゲーションリンク
+    &__nav-link {
+        font-size: 14px;
+        text-decoration: none;
+        color: #555;
+        padding: 4px 0;
+        border-bottom: 2px solid transparent;
+        transition: color 0.2s ease, border-color 0.2s ease;
+
+        &:hover {
+            color: #333;
+        }
+
+        // アクティブ（現在のページ）
+        &--active {
+            color: #333;
+            font-weight: bold;
+            border-bottom-color: #333;
+        }
+    }
+
+    // カートアイコンエリア
+    &__cart {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    // カートアイコン（SVG）
+    &__cart-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    // カート合計個数バッジ
+    &__cart-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 22px;
+        height: 22px;
+        padding: 0 5px;
+        background-color: #c0392b;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 11px;
+        // 個数が0のときは非表示
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        // 個数が1以上のときに表示
+        &--visible {
+            visibility: visible;
+            opacity: 1;
+            // 追加時のバウンスアニメーション
+            animation: badge-bounce 0.35s ease;
+        }
+    }
+}
+
+// バウンスアニメーション定義
+@keyframes badge-bounce {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.4); }
+    70%  { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+// ===== メインコンテンツ =====
+.main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 16px;
+}
+
+// ===== 商品一覧セクション =====
+.product-list {
+
+    // セクションタイトル
+    &__heading {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 24px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #333;
+    }
+
+    // 商品グリッド（PC: 3列 / SP: 1列）
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+
+        // タブレット（769px〜1024px）: 2列
+        @media (min-width: 769px) and (max-width: 1024px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        // スマートフォン（768px以下）: 1列
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+// ===== 商品カード =====
+.product-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+
+    // カードホバー時の浮き上がりエフェクト
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+
+        // 画像ホバー時のズームエフェクト
+        .product-card__image {
+            transform: scale(1.05);
+        }
+    }
+
+    // 商品画像エリア
+    &__image-wrap {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        background-color: #e8e8e8;
+    }
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    // 商品情報エリア
+    &__body {
+        padding: 16px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    // 商品名
+    &__name {
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 1.4;
+    }
+
+    // 価格
+    &__price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #c0392b;
+    }
+
+    // 税込表記
+    &__price-note {
+        font-size: 11px;
+        color: #888;
+        font-weight: normal;
+        margin-left: 4px;
+    }
+
+    // 価格・在庫切れ打ち消し線
+    &__price--sold-out {
+        text-decoration: line-through;
+        color: #aaa;
+    }
+
+    // カートボタン
+    &__button {
+        margin-top: auto;
+        padding: 10px 16px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        width: 100%;
+
+        // ホバー
+        &:hover {
+            background-color: #555;
+        }
+
+        // アクティブ（タップ時）
+        &:active {
+            background-color: #111;
+        }
+
+        // 無効状態（追加済み）
+        &:disabled {
+            background-color: #888;
+            cursor: default;
+        }
+
+        // SOLD OUT状態
+        &--sold-out {
+            background-color: #aaa;
+            cursor: not-allowed;
+
+            &:hover {
+                background-color: #aaa;
+            }
+        }
+    }
+}
+
+// ===== フッター =====
+.footer {
+    text-align: center;
+    padding: 24px 16px;
+    font-size: 12px;
+    color: #999;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 48px;
+}
+
+// ===== カートモーダル =====
+.cart-modal {
+    // オーバーレイ（position: fixed で画面全体を覆う）
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 100, 150, 0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    z-index: 1000;
+
+    // モーダル本体
+    &__inner {
+        background-color: #fff;
+        width: 400px;
+        max-width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
+
+        // スマートフォン対応
+        @media (max-width: 768px) {
+            width: 100vw;
+        }
+    }
+
+    // モーダルヘッダー
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    // モーダルタイトル
+    &__title {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    // 閉じるボタン
+    &__close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #666;
+        line-height: 1;
+        padding: 4px 8px;
+
+        &:hover {
+            color: #333;
+        }
+    }
+
+    // モーダルボディ（スクロール可能）
+    &__body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px 24px;
+    }
+
+    // カートが空のメッセージ
+    &__empty {
+        color: #888;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    // カートアイテム一覧
+    &__list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    // カートアイテム1件
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    // アイテム画像
+    &__item-image {
+        width: 64px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 4px;
+        flex-shrink: 0;
+    }
+
+    // アイテム情報エリア
+    &__item-info {
+        flex: 1;
+    }
+
+    // アイテム商品名
+    &__item-name {
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 1.4;
+    }
+
+    // アイテム価格
+    &__item-price {
+        font-size: 14px;
+        font-weight: bold;
+        color: #c0392b;
+        margin-top: 4px;
+    }
+
+    // 税込表記
+    &__item-price-note {
+        font-size: 11px;
+        color: #888;
+        font-weight: normal;
+        margin-left: 4px;
+    }
+
+    // 個数表示
+    &__item-qty {
+        font-size: 15px;
+        font-weight: bold;
+        color: #555;
+        flex-shrink: 0;
+    }
+
+    // フッター（合計金額エリア）
+    &__footer {
+        padding: 16px 24px;
+        border-top: 2px solid #e0e0e0;
+    }
+
+    // 注文するボタン
+    &__order-button {
+        display: block;
+        width: 100%;
+        margin-top: 16px;
+        padding: 14px;
+        background-color: #c0392b;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #a93226;
+        }
+
+        &:active {
+            background-color: #922b21;
+        }
+    }
+
+    // 合計金額行
+    &__total {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    // 合計金額
+    &__total-price {
+        font-size: 22px;
+        color: #c0392b;
+    }
+
+    // 税込表記
+    &__total-note {
+        font-size: 12px;
+        color: #888;
+        font-weight: normal;
+    }
+}
+
+// ===== 商品詳細ページ =====
+.product-detail {
+    // 一覧に戻るボタン
+    &__back-button {
+        display: inline-block;
+        margin-bottom: 24px;
+        padding: 8px 16px;
+        background: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        color: #555;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+
+    // 商品が見つからない場合のエリア
+    &__not-found {
+        text-align: center;
+        padding: 60px 16px;
+        color: #888;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    // 詳細コンテンツ（画像 + 情報の2カラム）
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: start;
+
+        // スマートフォン: 1カラム
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+    }
+
+    // 商品画像エリア
+    &__image-wrap {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        border-radius: 8px;
+        background-color: #e8e8e8;
+    }
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    // 商品情報エリア
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    // 商品名
+    &__name {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 1.4;
+
+        @media (max-width: 768px) {
+            font-size: 20px;
+        }
+    }
+
+    // 価格
+    &__price {
+        font-size: 26px;
+        font-weight: bold;
+        color: #c0392b;
+    }
+
+    // 税込表記
+    &__price-note {
+        font-size: 13px;
+        color: #888;
+        font-weight: normal;
+        margin-left: 6px;
+    }
+
+    // 商品説明文
+    &__description {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #555;
+    }
+
+    // 価格・在庫切れ打ち消し線
+    &__price--sold-out {
+        text-decoration: line-through;
+        color: #aaa;
+    }
+
+    // カートに入れるボタン
+    &__cart-button {
+        padding: 14px 24px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        width: 100%;
+
+        &:hover {
+            background-color: #555;
+        }
+
+        &:active {
+            background-color: #111;
+        }
+
+        // 無効状態（追加済み）
+        &:disabled {
+            background-color: #888;
+            cursor: default;
+        }
+
+        // SOLD OUT状態
+        &--sold-out {
+            background-color: #aaa;
+            cursor: not-allowed;
+
+            &:hover {
+                background-color: #aaa;
+            }
+        }
+    }
+}
+
+// ===== 在庫管理ページ =====
+.stock-management {
+
+    // セクションタイトル
+    &__heading {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 24px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #333;
+    }
+
+    // テーブル全体
+    &__table {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    // テーブル行
+    &__row {
+        display: grid;
+        grid-template-columns: 1fr auto auto auto;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 24px;
+        border-bottom: 1px solid #f0f0f0;
+
+        // 最終行のボーダーを削除
+        &:last-child {
+            border-bottom: none;
+        }
+
+        // ヘッダー行
+        &--header {
+            background-color: #f8f8f8;
+            font-size: 13px;
+            font-weight: bold;
+            color: #666;
+            padding: 12px 24px;
+        }
+
+        // スマートフォン対応
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr auto auto;
+            gap: 12px;
+            padding: 12px 16px;
+        }
+    }
+
+    // テーブルセル
+    &__cell {
+        font-size: 14px;
+
+        // 商品名セル
+        &--name {
+            font-weight: bold;
+        }
+    }
+
+    // 在庫数表示
+    &__stock {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        min-width: 40px;
+
+        // 在庫0のときは赤色で表示
+        &--zero {
+            color: #c0392b;
+        }
+    }
+
+    // + / - ボタンエリア
+    &__controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    // + / - ボタン共通
+    &__btn {
+        width: 36px;
+        height: 36px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        font-size: 18px;
+        line-height: 1;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+
+        &:disabled {
+            color: #ccc;
+            cursor: not-allowed;
+            background-color: #fafafa;
+        }
+
+        // マイナスボタン
+        &--minus {
+            color: #c0392b;
+        }
+
+        // プラスボタン
+        &--plus {
+            color: #27ae60;
+        }
+    }
+}

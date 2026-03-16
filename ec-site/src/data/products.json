@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "name": "オーガニックコットン Tシャツ",
+        "price": 3980,
+        "image": "https://placehold.jp/400x300.png?text=Product+01",
+        "description": "肌に優しいオーガニックコットン100%使用のTシャツです。柔らかな着心地と吸湿性に優れ、日常使いからアウトドアまで幅広く活躍します。",
+        "stock": 10
+    },
+    {
+        "id": 2,
+        "name": "リネン ワイドパンツ",
+        "price": 7480,
+        "image": "https://placehold.jp/400x300.png?text=Product+02",
+        "description": "上質なリネン素材を使用したワイドシルエットのパンツです。通気性が高く、夏場でも快適に着用できます。カジュアルからきれいめコーデまで対応。",
+        "stock": 5
+    },
+    {
+        "id": 3,
+        "name": "レザー トートバッグ",
+        "price": 12800,
+        "image": "https://placehold.jp/400x300.png?text=Product+03",
+        "description": "本革を使用した上品なトートバッグです。使うほどに馴染む経年変化が楽しめます。A4サイズ対応で通勤・通学にも最適なサイズ感です。",
+        "stock": 3
+    },
+    {
+        "id": 4,
+        "name": "ウール ニットセーター",
+        "price": 9680,
+        "image": "https://placehold.jp/400x300.png?text=Product+04",
+        "description": "メリノウール100%の高品質ニットセーターです。保温性と柔らかさを兼ね備え、寒い季節でも快適な着心地を提供します。",
+        "stock": 0
+    },
+    {
+        "id": 5,
+        "name": "キャンバス スニーカー",
+        "price": 6200,
+        "image": "https://placehold.jp/400x300.png?text=Product+05",
+        "description": "耐久性の高いキャンバス地を使用したクラシックなスニーカーです。シンプルなデザインでどんなコーデにも合わせやすく、デイリーユースに最適です。",
+        "stock": 8
+    },
+    {
+        "id": 6,
+        "name": "シルク スカーフ",
+        "price": 4500,
+        "image": "https://placehold.jp/400x300.png?text=Product+06",
+        "description": "上質なシルク100%のスカーフです。首元やバッグのアクセントとして使えるマルチな一品。滑らかな質感とエレガントな光沢が魅力です。",
+        "stock": 0
+    }
+]
